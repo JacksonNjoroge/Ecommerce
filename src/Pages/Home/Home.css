@@ -112,9 +112,10 @@
     font-size: 20px;
     font-weight: 600;
     margin: 20px;
+    color: white;
 }
 .featureDesc{
-    color: gray;
+    color: #999;
     width: 50%;
     height: 100px;
 }
@@ -240,6 +241,7 @@
 .gallery{
     padding: 50px;
     display: flex;
+    color: white;
 }
 .galleryItem{
     flex: 1;
@@ -252,9 +254,11 @@
 /*New Season*/
 .ns{
     text-align: center;
+    color: white;
 }
 .newSeason{
     display: flex;
+    color: white;
 }
 .nsItem{
     flex: 1;
