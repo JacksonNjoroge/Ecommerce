@@ -180,29 +180,29 @@
 }
 .far-left{
     transform: translateX(-60px) translateZ(-50px) rotateY(-10deg);
-    background-image: url("./public/adidas.png");
+    background-image: url("/adidas.png");
     background-size: 100px 100px;
 }
 .left{
     transform: translateX(-30px) translateZ(-25px) rotateY(-5deg);
-    background-image: url("./public/jordan-logo.png");
+    background-image: url("/jordan-logo.png");
     background-size: 100px 100px;
 }
 .Center{
     width: 300px;
     text-align: center;
     opacity: 1;
-    background-image: url("./public/nike.png");
+    background-image: url("/nike.png");
     background-size: 200px 100px;
 }
 .right{
     transform: translateX(30px) translateZ(-25px) rotateY(5deg);
-    background-image: url("./public/vans.png");
+    background-image: url("/vans.png");
     background-size: contain;
 }
 .far-right{
     transform: translateX(60px) translateZ(-50px) rotateY(10deg);
-    background-image: url("./public/lv.png");
+    background-image: url("/lv.png");
     background-size: contain;
 }
 .explainer{
