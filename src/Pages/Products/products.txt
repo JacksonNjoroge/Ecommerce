@@ -1,0 +1,267 @@
+import { useEffect, useState } from 'react';
+import useFetch from "../../useFetch";
+import './Products.css';
+import Modal from '../../Components/Modal/Modal'; 
+import Loader from '../../Components/Loader/Loader';
+
+function Products() {
+  const { data: products, loading, error } = useFetch("https://fakestoreapi.com/products");
+  const [cart, setCart] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isCartVisible, setIsCartVisible] = useState(false);
+
+  // Function to handle adding products to the cart
+  const addToCart = (product) => {
+    const exists = cart.find(item => item.id === product.id);
+    if (exists) {
+      setCart(cart.map(item =>
+        item.id === product.id ? { ...exists, quantity: exists.quantity + 1 } : item
+      ));
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+    setIsCartVisible(true);
+  };
+
+  // Function to handle removing products from the cart
+  const removeFromCart = (productId) => {
+    setCart(cart.filter(item => item.id !== productId));
+  };
+
+  // Function to update quantity
+  const updateQuantity = (productId, amount) => {
+    setCart(cart.map(item =>
+      item.id === productId ? { ...item, quantity: item.quantity + amount } : item
+    ));
+  };
+
+  // Calculate total price of items in the cart
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  };
+
+  // Toggle cart visibility
+ // Toggle cart visibility and adjust product width
+const toggleCart = () => {
+  const productContainer = document.querySelector('.product');
+
+  setIsCartVisible(!isCartVisible);
+  
+  if (!isCartVisible) {
+    // If cart is going to be opened, reduce product width
+    productContainer.classList.remove('full-width');
+    productContainer.classList.add('reduced-width');
+  } else {
+    // If cart is going to be closed, set product to full width
+    productContainer.classList.remove('reduced-width');
+    productContainer.classList.add('full-width');
+  }
+};
+
+
+// Initially set full width when component mounts
+useEffect(() => {
+  const productContainer = document.querySelector('.product');
+  productContainer.classList.add('full-width');
+}, []);
+
+
+  // Close cart on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isCartVisible) {
+        setIsCartVisible(false); // Hide cart on scroll
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isCartVisible]);
+
+  // Function to open the modal
+  const openModal = (product) => {
+    setSelectedProduct(product);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setSelectedProduct(null);
+  };
+
+  if (loading) return <Loader/>;
+  if (error) return <h1>Error: {error.message}</h1>;
+
+  return (
+    <div className="Container">
+      <h1 className="heading">Products</h1>
+
+      <div className="Contents">
+        <div className="product">
+          {products && products.length > 0 ? (
+            products.map((product) => (
+              <div 
+                key={product.id} 
+                className="productcard" 
+                onClick={() => openModal(product)} // Open modal on card click
+              >
+                <h2>{product.category}</h2>
+                <img src={product.image} alt={product.title} className="product-image" />
+                <p>{product.title}</p>
+                <p>$ {product.price}</p>
+                <button className="addToCart" 
+                  onClick={(e) => { e.stopPropagation(); addToCart(product); }} title='Add To Cart'><i className='bx bx-cart-add'></i></button>
+              </div>
+            ))
+          ) : (
+            <p>No products available</p>
+          )}
+        </div>
+      </div>
+
+      <button onClick={toggleCart}>
+        {isCartVisible ? 'Close Cart' : 'Open Cart'}
+      </button>
+
+      {isCartVisible && (
+        <div className='cart'>
+          <button className="close-btn" onClick={() => setIsCartVisible(false)}>X</button> {/* Close button */}
+          <h2>Your Cart</h2>
+          {cart.length === 0 ? (
+            <p>Your cart is empty</p>
+          ) : (
+            <>
+              {cart.map((item) => (
+                <div key={item.id} className='item'>
+                  <img src={item.image} alt={item.title} className='item-image' />
+                  <div className='item-details'>
+                    <p className='item-title'>{item.title}</p>
+                    <p>$ {item.price} x {item.quantity} = ${(item.price * item.quantity).toFixed(2)}</p>
+                    <div className='item-btns'>
+                      <button className='add-item item-btn' onClick={() => updateQuantity(item.id, 1)}>+</button>
+                      <button className='remove-item item-btn' onClick={() => updateQuantity(item.id, -1)} disabled={item.quantity === 1}>-</button>
+                      <button className='delete-item item-btn' onClick={() => removeFromCart(item.id)}><i className='bx bxs-trash'></i></button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <h3>Total Price: $ {calculateTotal()}</h3>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Modal component to show product details */}
+      <Modal product={selectedProduct} onClose={closeModal} />
+    </div>
+  );
+}
+
+export default Products;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from "react";
+import ItemCard from "./ProductsCard";
+
+
+const Products = () => {
+  const [filter, setFilter] = useState("All");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // Filtering logic based on selected filter
+  const filteredProducts = products.filter((product) => {
+    if (filter === "All") return true;
+    return product.category.toLowerCase() === filter.toLowerCase();
+  });
+
+  return (
+    <>
+      <ProductsFilter setFilter={setFilter} />
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : filteredProducts.length > 0 ? (
+        <ItemCard Items={filteredProducts} />
+      ) : (
+        <p>No products found for the selected category.</p>
+      )}
+    </>
+  );
+};
+
+export const ProductsFilter = ({ setFilter }) => {
+  return (
+    <>
+      <div className="d-flex gap-2 justify-content-center mt-5">
+        <button
+          className="btn btn-primary ms-2"
+          type="button"
+          onClick={() => setFilter("All")}
+        >
+          All
+        </button>
+        <button
+          className="btn btn-primary ms-2"
+          type="button"
+          onClick={() => setFilter("men's clothing")}
+        >
+          Men's Category
+        </button>
+        <button
+          className="btn btn-primary ms-2"
+          type="button"
+          onClick={() => setFilter("women's clothing")}
+        >
+          Women's Category
+        </button>
+        <button
+          className="btn btn-primary ms-2"
+          type="button"
+          onClick={() => setFilter("jewelery")}
+        >
+          Jewelry
+        </button>
+        <button
+          className="btn btn-primary ms-2"
+          type="button"
+          onClick={() => setFilter("electronics")}
+        >
+          Electronics
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default Products;

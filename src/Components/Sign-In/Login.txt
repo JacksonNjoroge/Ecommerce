@@ -1,0 +1,117 @@
+import { useState } from "react";
+import './Login.css'
+function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    function handleLogin(e) {
+        e.preventDefault();
+
+        // Check if the fields are empty
+        if (!email || !password) {
+            alert('Please enter both email and password.');
+            return;
+        }
+
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+
+        // Check if user exists in local storage
+        if (storedUser) {
+            if (storedUser.email === email && storedUser.password === password) {
+                alert('Logged In Successfully');
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
+        } else {
+            alert('No user found. Please register first.');
+        }
+    }
+
+    return (
+        <div className="login-form">
+            <h2>Login</h2>
+            <form onSubmit={handleLogin}>
+                <div className="input-box">
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="input-box">
+                    <label>Password:</label>
+                    <input 
+                        type="password" 
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    );
+}
+
+export default Login;
+
+
+.login-form{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #f3f3f3;
+}
+.login-form form{
+    height: 60%;
+    padding: 40px 20px;
+    width: 25%;
+    background: #e9edf3;
+    border: 3px solid #a49d9d;
+    border-radius: 20px;
+}
+.login-form form .input-box{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    margin: 30px 0;
+}
+.login-form form .input-box label{
+    position: absolute;
+    top: -15px;
+}
+.login-form form .input-box input[type = 'email']{
+    margin-bottom: 20px;
+    width: 100%;
+}
+.login-form form .input-box input{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: inset 0px 6px 10px rgba(0, 0, 0, 0.3);
+    outline: none;
+    background-color: #f8f8f8;
+    font-size: 14px;
+    color: #333;
+    height: 50px;
+}
+.login-form form button{
+    width: 100%;
+    padding: 12px;
+    background-color: #010109;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: background-color 0.3s;
+}

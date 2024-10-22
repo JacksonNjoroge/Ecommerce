@@ -1,0 +1,150 @@
+
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.footer{
+    width: 100%;
+    background: #010109;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 40px;
+    border-radius:  0 0 15px 15px;
+}
+.top-section{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.logo{
+    width: 100px;
+}
+.social-box{
+    width: 200px;
+    padding: 10px;
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+.social-box i {
+    margin-left: 5px;
+    color: #fff;
+}
+.social-box i:hover{
+    animation-play-state: paused;
+    transform: scale(1) rotate(0);
+    opacity: 1;
+}
+.social-box .bxl-youtube{
+    color: crimson;
+}
+.social-box .bxl-twitter{
+    color: #1da1f2;
+}
+.social-box .bxl-facebook{
+    color: #1877f2;
+}
+.social-box .bxl-instagram {
+    background: linear-gradient(45deg, #833AB4, #FD1D1D, #FCCC63);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+
+.mid-section{
+    width: 100%;
+    display: flex;
+    padding: 10px;
+}
+.mid-section .Quick-Links{
+    display: flex;
+    width: 100%;
+    margin: 10px 0;
+    justify-content: space-evenly;
+}
+.mid-section  .Quick-Links a{
+    color: #888;
+    text-decoration: none;
+    margin: 7px 0;
+}
+.mid-section .Quick-Links .pages{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+}
+.mid-section .Quick-Links .Products{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+}
+.mid-section .Quick-Links .Resources{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+}
+.mid-section .newsLetter{
+    padding: 10px;
+    color: #fff;
+}
+.mid-section .newsLetter h3{
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+.mid-section .newsLetter form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 10px;
+    background: #12122ef4;
+    padding: 20px;
+    border-radius: 15px;
+}
+.mid-section .newsLetter form input[type = "email"]{
+    width: 70%;
+    height: 2.5rem;
+    border-radius: 25px;
+    padding: 10px;
+    border: 0;
+    outline: 0;
+    background: #888;
+}
+.mid-section .newsLetter form input[type = "email"]::placeholder{
+    color: #010109;
+}
+.mid-section .newsLetter form input[type = "checkbox"]{
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 1px solid #888;
+}
+.mid-section .newsLetter form .checkbox-label{
+    font-size: 12px;
+    color: #888;
+    font-weight: 200;
+}
+.mid-section .newsLetter form .checkbox-label a{
+    text-decoration: none;
+    color: #fff;
+}
+.mid-section .newsLetter form .form-bottom{
+    display: flex;
+    justify-content: space-between;
+}
+.mid-section .newsLetter form .form-bottom .submit{
+    width: 80px;
+    border-radius: 20px;
+    border: 0;
+    outline: 0;
+    background: #fb9f00;
+    color: #fff;
+}
+.footer .bottom-section{
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
