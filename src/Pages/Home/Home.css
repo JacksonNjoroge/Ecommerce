@@ -175,7 +175,7 @@
     left: 5px;
     position: absolute;
     will-change: transform;
-    color: #000;
+    color: #f7f7f7;
     text-shadow: 0 0 5px rgba(255,255,255,0.1);
 }
 .far-left{
