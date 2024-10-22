@@ -285,7 +285,7 @@
     }
   }
 }
-.Login-btn {
+.login-btn {
   background-color: #e0e0e0;
   border-radius: 30px;
   margin: 15px auto;
@@ -302,7 +302,7 @@
   transition: all 0.3s ease-in-out;
   border: 2px solid rgb(206, 206, 206);
 }
-.Login-btn:hover {
+.login-btn:hover {
   box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff,
     2px 2px 5px #bcbcbc, -2px -2px 5px #ffffff;
   outline: 0;
